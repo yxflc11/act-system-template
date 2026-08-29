@@ -8,7 +8,11 @@ audit_hits=0
 scan_files() {
   audit_label="$1"
   audit_pattern="$2"
-  audit_result="$(rg -l --hidden --glob '!.git/**' --glob '!scripts/privacy-audit.sh' "$audit_pattern" "$audit_root" 2>/dev/null || true)"
+  # Scan from the repo root so !scripts/privacy-audit.sh matches; absolute search paths ignore that glob.
+  audit_result="$(
+    CDPATH= cd -- "$audit_root" &&
+    rg -l --hidden --glob '!.git/**' --glob '!scripts/privacy-audit.sh' "$audit_pattern" . 2>/dev/null || true
+  )"
   if [ -n "$audit_result" ]; then
     printf '[FAIL] %s\n%s\n' "$audit_label" "$audit_result"
     audit_hits=1
