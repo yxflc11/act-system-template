@@ -1,0 +1,50 @@
+formulas:
+  update_day: file.mtime.format("YYYY-MM-DD")
+  last_modified_relative: file.mtime.relative()
+  last_modified_full: file.mtime.format("YYYY-MM-DD HH:mm")
+properties:
+  formula.update_day:
+    displayName: 日期
+  file.name:
+    displayName: 笔记名称
+  formula.last_modified_relative:
+    displayName: 更新距今
+  formula.last_modified_full:
+    displayName: 更新时间
+  file.folder:
+    displayName: 文件夹
+views:
+  - type: table
+    name: 收件箱
+    filters:
+      and:
+        - file.folder == "x"
+    order:
+      - file.name
+      - formula.last_modified_full
+      - file.folder
+    sort:
+      - property: formula.last_modified_full
+        direction: DESC
+    columnSize:
+      file.name: 350
+      formula.last_modified_full: 166
+  - type: table
+    name: 最近更新
+    filters:
+      and:
+        - file.ext == "md"
+        - file.mtime > now() - "30d"
+    groupBy:
+      property: formula.update_day
+      direction: DESC
+    order:
+      - file.name
+      - formula.last_modified_full
+      - formula.last_modified_relative
+      - file.folder
+    summaries:
+      file.name: Filled
+    columnSize:
+      formula.last_modified_full: 166
+      formula.last_modified_relative: 165

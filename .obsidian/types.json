@@ -1,0 +1,7 @@
+{
+  "types": {
+    "AI 备注": "text",
+    "创建日期": "date",
+    "已回顾": "checkbox"
+  }
+}

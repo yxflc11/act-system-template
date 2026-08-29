@@ -1,0 +1,13 @@
+{
+  "file-explorer": true,
+  "global-search": true,
+  "switcher": true,
+  "backlink": true,
+  "bases": true,
+  "daily-notes": true,
+  "graph": true,
+  "outgoing-link": true,
+  "outline": true,
+  "properties": true,
+  "templates": true
+}

@@ -1,0 +1,18 @@
+views:
+  - type: table
+    name: 入链（inlinks）
+    filters:
+      or:
+        - file.hasLink(this.file)
+  - type: table
+    name: 出链（outlinks）
+    filters:
+      and:
+        - this.file.hasLink(file)
+        - '!file.folder.startsWith("40-storage")'
+  - type: table
+    name: 当前文件夹笔记
+    filters:
+      and:
+        - file.folder == this.file.folder
+        - file.path != this.file.path
